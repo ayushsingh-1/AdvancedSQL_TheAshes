@@ -1,0 +1,384 @@
+May 14: 
+
+select * from staff;
+select * from company_divisions;
+select * from company_regions;
+select * from staff where last_name like 'T%s';
+select count(*) from staff where last_name like 'M%a';
+select last_name from staff where last_name like 'M%o';
+select distinct last_name from staff where last_name like 'M%o';
+select * from company_divisions limit 10;
+select count(*) from staff;
+
+select cd.department, count(*) as total from staff as s join company_divisions as cd on s.department=cd.department group by cd.department;
+
+select cd.department, count(*) as total from staff as s left join company_divisions as cd on s.department=cd.department group by cd.department;
+
+select gender, count(*) from staff group by gender;
+
+select count(distinct department) from staff;
+select count(department) from company_divisions;
+
+select distinct s.department, cd.department from staff as s left join company_divisions as cd on s.department=cd.department order by s.department ASC;
+
+select last_name, salary from staff group by last_name, salary order by salary desc limit 1;
+select max(salary) from staff;
+
+select last_name, salary from staff group by last_name, salary order by salary asc limit 1;
+select min(salary) from staff;
+select avg(salary) from staff;
+
+May 15:
+
+select max(salary), min(salary), avg(salary) from staff;
+
+select gender, department, max(salary), min(salary) from staff group by gender, department order by department;
+
+select gender, department, max(salary), min(salary), avg(salary) from staff group by gender, department order by department;
+
+select sum(salary) from staff;
+select department, sum(salary) from staff group by department order by department asc;
+
+select department, sum(salary), count (id), avg(salary) from staff group by department order by department asc;
+
+select department, avg(salary), count(id), stddev_pop(salary), var_pop(salary) from staff group by department order by department asc;
+select count(id), round(avg(salary),2), stddev_pop(salary), var_pop(salary) from staff;
+
+select count(id), round(avg(salary),2), round(var_pop(salary),2), round(stddev_pop(salary)) from staff;
+
+select department, count(id), round(avg(salary),2) as average, round(var_pop(salary),2) as variance, round(stddev_pop(salary),2) as std_dev from staff group by department order by department asc;
+
+May 16:
+
+select count(distinct id) from staff where salary > 100000;
+
+select count(distinct id) from staff where salary = 100000;
+select distinct id, salary from staff where salary > 100000;
+
+select last_name, department, salary from staff where salary > 100000;
+
+select distinct(department) from staff;
+select count(id) from staff where department ='Tools';
+select last_name, salary from staff where department like 'Tool%';
+select last_name, salary from staff where department ='Tools';
+select last_name, department, salary from staff where salary >100000 and department='Tools'; 
+
+select last_name, department, salary from staff where salary >100000 or department='Tools';
+
+select distinct(department) from staff where department like 'G%';
+select last_name, department, salary from staff where department like 'B%';
+
+select department, round(avg(salary),2) from staff where department like 'B%' group by department;
+
+select department, round(sum(salary)) as sum_salary from staff where department like 'Bo%' group by department;
+
+select department, round(var_pop(salary),2) as salary_var from staff where department like 'B%y' group by department;
+
+
+May 17:
+
+select department, round(avg(salary),2) as average, round(stddev_pop(salary),2) as stddev from staff where department like 'B___s' group by department;
+
+select distinct(department), count(id) from staff group by department;
+
+select distinct upper(last_name) from staff;
+
+select distinct lower(department) from staff;
+
+select initcap(department), round(avg(salary),2) as average from staff group by department;
+
+select distinct upper(department) as updept, lower(department) as lowdept, initcap(department) from staff;
+
+select distinct (job_title||' - '||department) as job_dept from staff;
+
+select initcap(last_name)||' - '||upper(department) as emp_dept from staff;
+
+select lower(last_name)||' - '||initcap(gender) as emp_gender from staff order by gender;
+
+select upper(department), round(stddev_pop(salary),2) ||' x2 = '|| round(var_pop(salary),2) as stddev_var from staff group by department order by department;
+
+select upper(department)||' = '||round(avg(salary),2) as dept_avg from staff group by department order by department;
+
+select upper(department)||' = '||count(id)||' employees work here' as dept_emp from staff group by department order by department desc;
+
+select '     Rachel Suter <3     ' as crush, trim('     Rachel Suter <3     ') as trimmed_crush;
+
+select length(' Rachel     Suter!!!   ')
+select length(trim(' Rachel     Suter!!!   '))
+
+select trim('       I    ')|| trim(' <3 ')||trim('     Rachel Suter     ') as crush
+
+select length(trim('       I    ')|| ' <3 '||trim('     Rachel Suter     ')) as crush_length
+
+select distinct job_title from staff where job_title like 'Assistant%';
+
+select distinct job_title from staff where job_title like '%Assistant%';
+
+select distinct job_title, (job_title like upper('%Assistant%')) is_asst from staff;
+
+select distinct job_title, (job_title like '%Assistant%') is_asst from staff;
+
+select distinct job_title, (job_title like upper('%administrator%') or job_title like lower('%administrator%') or job_title like initcap('%administrator%')) is_admin from staff;
+
+select distinct job_title, (job_title like upper('%engineer%') or job_title like lower('%engineer%') or job_title like initcap('%engineer%')) as is_engineer from staff
+
+select distinct job_title, (job_title like upper('%design%') or job_title like lower('%design%') or job_title like initcap('%design%')) is_designer from staff;
+
+
+May 18: 
+
+select length(trim('    I <3 Rachel Suter.          ')) as trimmedcrush, length('    I <3 Rachel Suter.          ')
+
+select distinct job_title, (job_title like upper('%chief%') or job_title like lower('%chief%') or job_title like initcap('%chief%')) as is_exec from staff;
+
+Substring from 1 for 5;
+
+select substring('abcdefghijkl' from -1 for 5) as sub_string
+
+select substring(trim('   I <3 Rachel Suter      ') from 1 for 17) as crush
+
+select substring(trim('     Dream with in a dream with in a dream.     ') from 16)
+
+select substring('Radical Notions and Time' from 1 for 7)
+
+select substring(job_title from 10) as categories from staff where job_title like 'Assistant%';
+
+select substring(job_title from 10) as categories from staff where job_title like 'Associate%'
+
+select substring(job_title from 9) as sw_positions from staff where job_title like 'Software%'
+
+select trim(substring(job_title from 9)) db_admin_pos from staff where job_title like 'Database%'
+
+select overlay(job_title placing 'Assoc.' from 1 for 9) from staff where job_title like 'Associate%'
+
+select trim(overlay(job_title placing 'Assoc.' from 1 for 9)) from staff where job_title like 'Associate%'
+
+select trim(overlay(job_title placing 'Asst.' from 1 for 9)) as abbrev_job_pos from staff where job_title like 'Assistant%'
+
+select length(job_title) from staff where job_title like 'Assistant%';
+
+select length(trim(overlay(job_title placing 'Asst.' from 1 for 9))) as abbrev_job_pos from staff where job_title like 'Assistant%'
+
+select length (job_title) untrimmed_assoc, length(trim(overlay(job_title placing 'Assoc.' from 1 for 9))) trimmed_assoc from staff where job_title like 'Associate%'
+
+May 19:
+
+select trim(overlay(job_title placing 'Qlty.' from 1 for 7)) as trim_quality_pos from staff where job_title like 'Quality%';
+
+Similar to provides regex capabilities, parentheses are used to group multiple conditions or no conditions at all too. No effect if there are no multiple conditions. 
+
+select job_title from staff where job_title similar to '%Assistant%I__'
+
+select job_title from staff where job_title similar to '%Assistant (I|III)'
+
+select job_title from staff where job_title similar to '%(Assistant|Associate)%'
+
+select last_name from staff where last_name similar to '%(Taylor|Jones)%'
+
+select job_title from staff where job_title similar to '%Engineer%I'
+
+select job_title from staff where job_title similar to '%Engineer% (I|I_|I__)'
+
+select job_title from staff where job_title similar to '%Accountant_%'
+
+select job_title from staff where job_title similar to '(E|P|S)%'
+
+select job_title from staff where job_title similar to '[APE]%'
+
+May 20:
+
+select job_title from staff where job_title similar to '%Developer %(I_)'
+
+select job_title from staff where job_title similar to '%Developer %(I|V)'
+
+select department, avg(salary), round(avg(salary),2), trunc(avg(salary)) from staff group by department order by department;
+
+select department, round(avg(salary),2) as round_avg, trunc(avg(salary)) as trunc_avg, round(stddev_pop(salary),2) as round_stddev, trunc(stddev_pop(salary)) as trunc_stddev, round(var_pop(salary),2) as round_var, trunc(var_pop(salary)) as trunc_var from staff group by department order by department asc;
+
+select department, round(avg(salary),2) as round_avg, ceil(avg(salary)) from staff group by department
+
+select department, round(avg(salary),2) as round_avg, ceil(avg(salary)) as ceil_salary, floor(avg(salary)) as floor_salary from staff group by department order by department
+
+select department, round(avg(salary),2), ceil(avg(salary)), floor(avg(salary)), trunc(avg(salary),2) from staff group by department order by department
+
+May 22:
+
+A subquery can be used in all 3 places of a main query, in the attributes section, in the from section and in the where section.
+
+select department, round(avg(salary),2), floor(avg(salary)), ceil(avg(salary)), trunc(avg(salary)) from staff group by department order by department
+
+select job_title from staff where job_title like '%Developer I_'
+
+select department, round(avg(salary),2), round(avg(salary)), floor(avg(salary)), ceil(avg(salary)), trunc(avg(salary)) from staff group by department order by department
+
+select s1.last_name, s1.department, s1.salary as emp_salary, (select round(avg(s2.salary),2) as dept_salary from staff s2 where s2.department = s1.department) as dept_avg from staff s1
+
+select s1.department, round(avg(s1.salary),2) as avg_dept_salary, (select round(avg(s2.salary),2) as mean_exec_salary from staff as s2 where s2.salary >100000 and s2.department=s1.department) from staff as s1 group by s1.department order by s1.department
+
+select s1.department, round(avg(s1.exec_salary)) from (select s2.department, s2.salary as exec_salary from staff as s2 where s2.salary>100000) as s1 group by s1.department order by s1.department
+
+select s2.department, s2.last_name, s2.salary from staff as s2 where s2.salary in (select max(s1.salary) from staff as s1)
+
+select s2.department, s2.last_name, s2.salary from staff as s2 where s2.salary = (select max(s1.salary) from staff as s1)
+
+May 23:
+
+select department, last_name, salary from staff where salary = (select min(salary) from staff)
+
+select s1.department, round(avg(s1.salary)) as avg_sal, (select round(avg(s2.salary)) as low_level_avg_sal from staff s2 where s2.salary <60000 and s2.department=s1.department) from staff s1 group by s1.department order by avg_sal desc;
+
+select * from staff as s join company_divisions as cd on s.department=cd.department;
+
+select s.last_name, s.department, cd.company_division from staff as s join company_divisions as cd on s.department=cd.department;
+
+select distinct s.department, cd.company_division from staff as s join company_divisions as cd on s.department=cd.department and s.department like 'C%';
+
+select distinct s.department, cd.company_division from staff as s join company_divisions as cd on s.department=cd.department and s.department like '%s';
+
+select s.last_name, s.department, cd.company_division from staff as s left join company_divisions as cd on s.department=cd.department 
+
+select s.last_name, s.department, cd.company_division from staff as s left join company_divisions as cd on s.department=cd.department where company_division is null; 
+
+May 24th:
+
+select s1.department, round(avg(s1.salary),2) as actual_avg, (select round(avg(s2.salary),2) as not_exec_salary from staff as s2 where salary <100000 and s2.department=s1.department) from staff as s1 group by s1.department order by actual_avg
+
+select s.last_name, s.department, cd.company_division from staff as s left join company_divisions as cd on s.department=cd.department where s.department like 'B___s';
+
+select distinct region_id from staff order by region_id;
+
+select * from company_regions;
+
+select s.*, trim(cd.company_division), cr.company_regions, trim(cr.country) from staff as s left join company_divisions as cd on s.department=cd.department left join company_regions as cr on s.region_id=cr.region_id
+
+create view staff_div_reg as (select s.*, trim(cd.company_division) as company_division, cr.company_regions, trim(cr.country) as country from staff as s left join company_divisions as cd on s.department=cd.department left join company_regions as cr on s.region_id=cr.region_id);
+
+select * from staff_div_reg;
+
+select count(*) from staff_div_reg;
+
+select company_regions, count(id) from staff_div_reg group by company_regions;
+
+OLD Specified grouping:
+select company_division, company_regions, count(id) from staff_div_reg group by company_regions, company_division order by company_regions, company_division asc;
+
+NEW Abstract grouping:
+select company_division, company_regions, count(id) from staff_div_reg group by grouping sets(company_division, company_regions) order by company_division, company_regions;
+
+select company_division, company_regions, count(id) from staff_div_reg where company_regions like 'British%' group by grouping sets(company_division, company_regions) order by company_division, company_regions;
+
+select company_division, company_regions, gender, count(id) from staff_div_reg group by grouping sets(company_division, company_regions, gender) order by company_division, company_regions, gender;
+
+May 25:
+
+create or replace view staff_div_reg as (select s.*, trim(cd.company_division) as company_division, cr.company_regions, trim(cr.country) as country from staff as s left join company_divisions as cd on s.department=cd.department left join company_regions as cr on s.region_id=cr.region_id)
+
+select company_regions, country, count(id) from staff_div_reg group by grouping sets (company_regions, country) order by company_regions, country asc;
+
+Rollup: Just shows individual sums from first column in group by clause
+
+select company_regions, country, count(id) from staff_div_reg group by rollup(country, company_regions) order by country, company_regions
+
+Cube: Selects individual sums from Both country and company_regions
+
+select company_regions, country, count(id) from staff_div_reg group by cube(country,company_regions) order by country, company_regions
+
+
+May 26:
+
+select company_division, country, count(id) from staff_div_reg group by grouping sets(company_division, country) order by company_division, country;
+
+select company_division, country, count(id) from staff_div_reg group by cube(company_division, country) order by company_division, country;
+
+select company_division, country, count(id) from staff_div_reg group by company_division, country order by company_division, country;
+
+select company_division, country, count(id) from staff_div_reg where country is null group by company_division, country;
+
+select last_name, department, round(salary,2) as salary from staff_div_reg order by salary desc limit 10;
+
+select company_division, count(id) as num_emp from staff_div_reg group by company_division order by num_emp desc fetch first 1 row only;
+
+May 28:
+
+select s1.last_name, s1.department, round(s1.salary,2) as emp_salary, (select round(avg(s2.salary),2) as avg_dept_salary from staff_div_reg as s2 where s2.department=s1.department) from staff_div_reg as s1 order by s1.department;
+
+OVER (PARTITION BY): Used as a windowing function, acts as a subquery. OVER can only be used with an aggregate function (max, min, avg etc). Partition by can be used as a group by but only for OVER. OVER can be left without a partition by, that way, it will give the result of the aggregate function for the whole dataset.
+
+select last_name, department, round(salary,2) as emp_sal, avg(salary) over (partition by department) as dept_avg from staff_div_reg;
+
+select round(var_pop(salary),2) as var_sal_dept from staff_div_reg;
+
+select last_name, department, round(salary,2) as emp_sal, var_pop(salary) over() as var_sal_all_dept from staff_div_reg;
+
+select last_name, department, max(salary) over (partition by department) as max_sal_dept from staff_div_reg;
+
+select company_regions, country, last_name, salary, min(salary) over (partition by company_regions) min_sal_cp_region from staff_div_reg;
+
+select overlay(job_title placing 'Dev' from 1 for 9) from staff_div_reg where job_title like 'Developer%';
+
+May 31:
+
+select job_title, round(salary,2) as emp_salary, avg(salary) over () as avg_salary from staff_div_reg;
+
+select s1.last_name, s1.job_title, round(s1.salary,2) as emp_salary, (select round(avg(s2.salary)) from staff_div_reg as s2 where s1.department = s2.department) from staff_div_reg as s1;
+
+select department, last_name, round(salary,2), first_value(round(salary,2)) over (partition by department order by salary asc) from staff_div_reg;
+
+select job_title, round(salary,2) as emp_sal, avg(salary) over (partition by job_title) from staff_div_reg;
+
+create or replace view region_avg_sal_diff as (select job_title, company_regions, round(salary,2) as emp_salary, avg(salary) over (partition by company_regions) as region_avg from staff_div_reg);
+
+select * from region_avg_sal_diff;
+
+select trim('$') || round(coalesce(region_avg,0) - coalesce(emp_salary,0),2) as salary_diff from region_avg_sal_diff;
+
+select job_title, trim('$') || round(coalesce(region_avg) + coalesce(emp_salary),2) as salary_diff from region_avg_sal_diff;
+
+select job_title, trim('$') || round(coalesce(region_avg) * coalesce(emp_salary),2) as salary_diff from region_avg_sal_diff;
+
+select job_title, trim('$') || round(coalesce(region_avg) / coalesce(emp_salary),2) as salary_diff from region_avg_sal_diff;
+
+select last_name, company_regions, round(salary,2) as emp_sal, first_value(round(salary,2)) over (partition by company_regions order by salary desc) from staff_div_reg;
+
+June 6:
+
+select company_regions, job_title, round(salary,2), max(salary) over(partition by company_regions) from staff_div_reg;
+
+select department, job_title, round(salary,2) as emp_salary, first_value(round(salary,2)) over(partition by department order by job_title desc) as dept_first_salary from staff_div_reg;
+
+select job_title, '$ ' || round(coalesce(region_avg) - coalesce(emp_salary),2) as avg_diff from region_avg_sal_diff where job_title like 'Nurse' group by job_title, region_avg, emp_salary;
+
+select '$ ' || round(coalesce(region_avg) - coalesce(emp_salary),2) as sal_diff from region_avg_sal_diff where job_title like initcap('nurse');
+
+Rank(): Gives a rank by partition, next partition means restarting rank. Order by clause is mandatory, gives the rank on order by values, if values are same, rank is same.
+
+select department, job_title, round(salary,2), rank() over(partition by department order by salary desc) from staff_div_reg;
+
+select company_regions, job_title, last_name, round(salary,2), rank() over (partition by company_regions order by last_name) from staff_div_reg;
+
+select department ||' : '|| job_title as Dept_Jobs, round(salary,2), rank() over(partition by department order by salary asc) as salary_rank from staff_div_reg;
+
+June 8:
+
+Lag: Lag the current row and show the previous row in the windowing functions. Lead: Lead the current column and show the next row in the windowing functions.
+
+select company_regions, job_title, round(salary,2) as salary, rank() over(partition by company_regions order by salary asc) from staff_div_reg;
+
+select department, job_title, round(salary,2) as salary, rank() over(partition by job_title order by salary desc) from staff_div_reg;
+
+select company_division, job_title, last_name, round(salary,2) as salary, lag(salary) over (partition by department order by salary desc) as lagging_salary from staff_div_reg;
+
+select company_division, job_title, last_name, round(salary,2) as salary, lag(salary) over (partition by department order by salary desc) as previous_salary from staff_div_reg;
+
+select department, job_title, round(salary,2) as salary, lead(salary) over (partition by department order by salary desc) as next_salary from staff_div_reg;
+
+select department, job_title, round(salary,2) as salary, lead(job_title) over (partition by department order by salary desc) as next_job_title, lead(salary) over (partition by department order by salary desc) as next_salary from staff_div_reg;
+
+select company_regions, job_title, round(salary,2) as salary, lag(job_title) over (partition by company_regions order by salary desc) as previous_job_title, lag(salary) over (partition by company_regions order by salary desc) as previous_salary from staff_div_reg;
+
+Ntile: Group the windowing column specified at the order by clause, into 'n' number of groups. It is a type of ranking, just doing it by percentile rules.
+
+select company_division, job_title, round(salary,2) as salary, ntile(4) over (partition by company_division order by salary desc) from staff_div_reg;
+
+select department, last_name, round(salary,2) as salary, ntile(8) over(partition by last_name order by salary desc) from staff_div_reg;
+
